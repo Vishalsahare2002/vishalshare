@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analog Clock</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    
+    .clock {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        border: 10px solid #333;
+        border-radius: 50%;
+    }
+    
+    .hour,
+    .minute,
+    .second {
+        position: absolute;
+        width: 50%;
+        height: 2px;
+        background: #333;
+        top: 50%;
+        transform-origin: 100%;
+        transform: rotate(90deg);
+        transition: all 0.5s ease-in-out;
+    }
+    
+    .minute {
+        height: 3px;
+        background: #666;
+    }
+    
+    .second {
+        background: red;
+    }
+</style>
+</head>
+<body>
+<div class="clock">
+    <div class="hour" id="hour"></div>
+    <div class="minute" id="minute"></div>
+    <div class="second" id="second"></div>
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        const hour = now.getHours() % 12;
+        const minute = now.getMinutes();
+        const second = now.getSeconds();
+
+        const hourHand = document.getElementById('hour');
+        const minuteHand = document.getElementById('minute');
+        const secondHand = document.getElementById('second');
+
+        const hourDeg = (hour * 30) + (0.5 * minute);
+        const minuteDeg = (minute * 6) + (0.1 * second);
+        const secondDeg = second * 6;
+
+        hourHand.style.transform = `rotate(${hourDeg}deg)`;
+        minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
+        secondHand.style.transform = `rotate(${secondDeg}deg)`;
+    }
+
+    // Run updateClock function every second
+    setInterval(updateClock, 1000);
+
+    // Initial call to updateClock function to avoid initial delay
+    updateClock();
+</script>
+</body>
+</html>
+```
+
